@@ -400,6 +400,11 @@ int main(){
 
             // Returns path between the robot and pick up points.
             s = aStarSearch(grid,r[index[i].first],p[index[i].second]); 
+            if(s.empty()){
+                s.push_back(r[index[i].first]);
+                store.push_back(s);
+                continue;
+            }
             store.push_back(s);                      // It stores the path of all robots.
             s.clear();
             printf("\n");
@@ -408,6 +413,12 @@ int main(){
 
             // Returns path between the pickup and destination points
             s = aStarSearch(grid,p[index[i].second],d[index[i].second]);
+            if(s.empty()){
+                r[index[i].first] = p[index[i].second];
+                s.push_back(r[index[i].first]);
+                store.push_back(s);
+                continue;
+            }
             for(int j=1;j<s.size();j++){
                 store[index[i].first].push_back(s[j]);     // Combining Pickup to destination Path and Robot to Pickup Path, 
             }                                              // Giving Robot to Destination Path.
@@ -436,6 +447,11 @@ int main(){
             printf("r(%d,%d) -> p(%d,%d) ",r[index[i].first].first,r[index[i].first].second,
                                                 p[index[i].second].first,p[index[i].second].second);
             s = aStarSearch(grid,r[index[i].first],p[index[i].second]);
+            if(s.empty()){
+                s.push_back(r[index[i].first]);
+                store.push_back(s);
+                continue;
+            }
             for(int j=1;j<s.size();j++){
                 store[index[i].first].push_back(s[j]);
             }
@@ -444,6 +460,12 @@ int main(){
             printf("r(%d,%d) -> d(%d,%d) ",p[index[i].second].first,p[index[i].second].second,
                                                 d[index[i].second].first,d[index[i].second].second);
             s = aStarSearch(grid,p[index[i].second],d[index[i].second]);
+            if(s.empty()){
+                r[index[i].first] = p[index[i].second];
+                s.push_back(r[index[i].first]);
+                store.push_back(s);
+                continue;
+            }
             for(int j=1;j<s.size();j++){
                 store[index[i].first].push_back(s[j]);
             }
@@ -478,6 +500,11 @@ int main(){
                 printf("r(%d,%d) -> p(%d,%d) ",r_[index[i].first].first,r_[index[i].first].second,
                                                 p_[index[i].second].first,p_[index[i].second].second);
                 s = aStarSearch(grid,r_[index[i].first],p_[index[i].second]);
+                if(s.empty()){
+                    s.push_back(r[index[i].first]);
+                    store.push_back(s);
+                    continue;
+                }
                 if(m_ == m)                  
                     store.push_back(s);       // To check whether the obtained paths of robots 
                 else{                         // are to be joined to older paths or to create new paths
@@ -490,6 +517,12 @@ int main(){
                 printf("r(%d,%d) -> d(%d,%d) ",p_[index[i].second].first,p_[index[i].second].second,
                                                 d_[index[i].second].first,d_[index[i].second].second);
                 s = aStarSearch(grid,p_[index[i].second],d_[index[i].second]);
+                if(s.empty()){
+                    r[index[i].first] = p[index[i].second];
+                    s.push_back(r[index[i].first]);
+                    store.push_back(s);
+                    continue;
+                }
                 for(int j=1;j<s.size();j++){
                     store[index[i].first].push_back(s[j]);
                 }
